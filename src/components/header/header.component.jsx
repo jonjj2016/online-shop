@@ -1,8 +1,9 @@
 import React from 'react';
 import './header.style.scss';
+import { auth } from '../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/4.4 crown.svg.svg';
-const Hader = () => (
+const Hader = ({ currenUser }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -14,6 +15,15 @@ const Hader = () => (
       <Link className="option" to="/contact">
         CONTACT
       </Link>
+      {currenUser ? (
+        <div className="option" onClick={() => auth.signOut()}>
+          SIGN OUT
+        </div>
+      ) : (
+        <Link className="option" to="/signin">
+          SIGN IN
+        </Link>
+      )}
     </div>
   </div>
 );
