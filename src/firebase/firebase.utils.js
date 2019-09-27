@@ -3,15 +3,41 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-    apiKey: "AIzaSyCphy3vPUbIJv6_ZMdMnBXr8PK81-xNgIg",
-    authDomain: "samle-db.firebaseapp.com",
-    databaseURL: "https://samle-db.firebaseio.com",
-    projectId: "samle-db",
+    apiKey: "AIzaSyBH5hy1NGN1KD47Fi2lialmLr093R2lMW8",
+    authDomain: "crwn-db-8c93e.firebaseapp.com",
+    databaseURL: "https://crwn-db-8c93e.firebaseio.com",
+    projectId: "crwn-db-8c93e",
     storageBucket: "",
-    messagingSenderId: "480162923391",
-    appId: "1:480162923391:web:1f5ab2bb3575d9e0b3d04a",
-    measurementId: "G-394HMT60NW"
+    messagingSenderId: "973146180029",
+    appId: "1:973146180029:web:7e382f45c3543a50896ad4",
+    measurementId: "G-8WYQ6DX6S6"
 }
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return
+    const userRef = firestore.doc(`users/${userAuth.uid}`)
+    const snapShot = await userRef.get()
+    console.log(snapShot)
+    if (!snapShot.exists) {
+        const {
+            displayName,
+            email
+        } = userAuth;
+        const createdAt = new Date()
+        try {
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+        } catch (err) {
+            console.log("Error creating user", err)
+        }
+    }
+    return userRef;
+}
+
 firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

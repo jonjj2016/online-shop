@@ -5,7 +5,7 @@ import ShopPage from './page/shop-page/shop.collection';
 import Homepage from './page/homepage/homepage.component';
 import Hader from './components/header/header.component';
 import SignInAndSignOutPage from './page/signin-and-signup-page/signin-and-signup-page.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 class App extends Component {
   constructor() {
@@ -15,10 +15,25 @@ class App extends Component {
     };
   }
 
-  //unsubscribeFromAuth=null
+  unsubscribeFromAuth = null;
   componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
+    auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot(snapShot => {
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              }
+            },
+            () => console.log(this.state)
+          );
+        });
+      } else {
+        this.setState({ currentUser: userAuth });
+      }
     });
   }
   componentWillUnmount() {
