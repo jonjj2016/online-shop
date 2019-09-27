@@ -1,8 +1,10 @@
 import React from 'react';
 import './header.style.scss';
+import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/4.4 crown.svg.svg';
+
 const Hader = ({ currenUser }) => (
   <div className="header">
     <Link className="logo-container" to="/">
@@ -27,4 +29,8 @@ const Hader = ({ currenUser }) => (
     </div>
   </div>
 );
-export default Hader;
+const mapStateToProps = state => ({
+  currenUser: state.user.currenUser
+});
+
+export default connect(mapStateToProps)(Hader);

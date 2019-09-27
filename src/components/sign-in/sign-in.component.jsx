@@ -13,7 +13,7 @@ class SignIn extends Component {
     };
   }
   handleSubmit = async e => {
-    e.prventDefault();
+    e.preventDefault();
     const { email, password } = this.state;
     try {
       await auth.signInWithEmailAndPassword(email, password);
