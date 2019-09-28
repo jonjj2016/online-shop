@@ -3,9 +3,10 @@ import './header.style.scss';
 import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { ReactComponent as Logo } from '../../assets/4.4 crown.svg.svg';
-
-const Hader = ({ currenUser }) => (
+import CartIcon from '../cart-icon/cart-icon.component';
+const Hader = ({ currenUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -26,11 +27,14 @@ const Hader = ({ currenUser }) => (
           SIGN IN
         </Link>
       )}
+      <CartIcon />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
-const mapStateToProps = state => ({
-  currenUser: state.user.currenUser
+const mapStateToProps = ({ user: { currenUser }, cart: { hidden } }) => ({
+  currenUser,
+  hidden
 });
 
 export default connect(mapStateToProps)(Hader);

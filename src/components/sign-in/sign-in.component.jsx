@@ -5,8 +5,8 @@ import FormInput from '../sorm-input/form-input.component';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 class SignIn extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: ''
@@ -19,7 +19,7 @@ class SignIn extends Component {
       await auth.signInWithEmailAndPassword(email, password);
       this.setState({ email: '', password: '' });
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
   handleChange = e => {
@@ -51,7 +51,7 @@ class SignIn extends Component {
             required
           />
           <div className="buttons">
-            <CustomButton type="submit">Submit Form</CustomButton>
+            <CustomButton type="submit">Sign in</CustomButton>
             <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
               Sign with Google
             </CustomButton>
