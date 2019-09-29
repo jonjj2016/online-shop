@@ -1,4 +1,5 @@
 import React from 'react';
+import { createStructuredSelector } from 'reselect';
 import { selectCartItemCount } from '../../redux/cart/cart.selector';
 import './cart-icon.style.scss';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';

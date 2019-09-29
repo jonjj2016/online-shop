@@ -3,6 +3,9 @@ import './header.style.scss';
 import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentHidden } from '../../redux/cart/cart.selector';
+import { selectCurrent } from '../../redux/user/user.selector';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { ReactComponent as Logo } from '../../assets/4.4 crown.svg.svg';
 import CartIcon from '../cart-icon/cart-icon.component';
@@ -32,9 +35,9 @@ const Hader = ({ currenUser, hidden }) => (
     {hidden ? null : <CartDropdown />}
   </div>
 );
-const mapStateToProps = ({ user: { currenUser }, cart: { hidden } }) => ({
-  currenUser,
-  hidden
+const mapStateToProps = createStructuredSelector({
+  currenUser: selectCurrent,
+  hidden: selectCurrentHidden
 });
 
 export default connect(mapStateToProps)(Hader);
